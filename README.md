@@ -21,5 +21,5 @@ It has optimize-css-assets-webpack-plugin and uglifyjs plugin enabled
 To start webpackdev-server
 1. npm run webpack
 
-this repo has custom loader called "stripjsoncomments" which removes the comments from json file.
+This repo has custom loader called "stripjsoncomments" which removes the comments from json file.
 
