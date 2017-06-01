@@ -16,8 +16,7 @@ module.exports = {
     },
 
     devServer: {
-        contentBase: "src/views",
-        hot: true
+        contentBase: "src/views"
     },
 
     plugins: [
