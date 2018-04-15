@@ -1,36 +1,51 @@
-var express = require('express');
-var path = require('path');
-var app = express();
-var port = 8086;
+import express from 'express';
+import path from 'path';
+import webpack from 'webpack';
+import devMiddleware from 'webpack-dev-middleware';
+import hotMiddleware from 'webpack-hot-middleware';
+import es6Renderer from 'express-es6-template-engine';
+import webpackConfig from '../../webpack.config';
+import favicon from 'serve-favicon';
 
-app.get('/', function (req, res) {
-    res.sendFile(path.resolve('src/views/test.html'));
-})
+const expressApp = express();
+const expressPORT = process.env.PORT || 3000;
+
+expressApp.engine('html', es6Renderer);
+expressApp.set('views', path.join(process.cwd(), 'dist'));
+expressApp.set('view engine', 'html');
+
+const faviconPath = path.join(process.cwd(),'assets', 'images', 'batman-10-24.ico');
+
+console.log(faviconPath);
+
+expressApp.use(favicon(faviconPath)); 
 
 if (process.env.NODE_ENV === 'development') {
-    var webpackDevMiddleware = require('webpack-dev-middleware');
-    var webpackHotMiddleware = require('webpack-hot-middleware');
-    var webpack = require('webpack');
+  const webpackdevConfig = webpackConfig('development');
+  const compiler = webpack(webpackdevConfig);
 
-    var config = require('../../webpack.config.js');
-    console.log("devpt");
-    app.use(webpackDevMiddleware(webpack(config), {
-        publicPath: "/build/",
-        stats: {
-            colors: true
-        }
-    }));
+  expressApp.use(devMiddleware(compiler, {
+    publicPath: webpackdevConfig.output.publicPath,
+    historyApiFallback: true,
+  }));
 
-    app.use(webpackHotMiddleware(webpack(config),{
-       //'log': t, 
-       'path': '/__webpack_hmr', 
-       'heartbeat': 10 * 1000
-    }));
-
-} else {
-    console.log("prod!");
-    app.use('/', express.static(path.join(__dirname, '../../')));
+  expressApp.use(hotMiddleware(compiler));
 }
-app.listen(port, function () {
-    console.log("Express server listening at " + port);
-})
+
+expressApp.use(express.static(path.join(process.cwd(), 'dist')));
+
+expressApp.get('*', (req, res, next) => {
+  if (req.accepts('html')) {
+    const data = req.session ? req.session.context : {};
+    return res.render('index', { locals: { data } });
+  }
+  return next();
+});
+
+expressApp.listen(expressPORT, (err) => {
+  if (err) {
+    console.error('Server ERROR : ', err);
+  } else {
+    console.log(`Express server listening at ${expressPORT}`);
+  }
+});

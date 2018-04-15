@@ -1,4 +1,28 @@
 {
-  "presets": ["es2015","react"],
-  "plugins": ["transform-class-properties","transform-object-rest-spread"]
+  "presets": [
+    "env",
+    "react",
+    "stage-0"
+  ],
+  "env": {
+    "development": {
+      "presets": [
+        "react-hmre"
+      ]
+    }
+  },
+  "plugins": [
+    ["import", { "libraryName": "antd", "style": true }],
+    "syntax-dynamic-import",
+    "transform-class-properties",
+    [
+      "transform-runtime",
+      {
+        "helpers": false,
+        "polyfill": false,
+        "regenerator": true,
+        "moduleName": "babel-runtime"
+      }
+    ]
+  ]
 }

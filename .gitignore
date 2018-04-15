@@ -1,1 +1,26 @@
-node_modules/
+#ignore node modules
+node_modules
+
+#ignore package-lock.json
+package-lock.json
+
+#ignore tmp folder
+.tmp
+
+#ignore dist folder
+dist
+
+#ignore .DS_Store
+.DS_Store
+
+#ignore other files
+.vscode
+
+#jsdoc code
+out
+*.tmp
+
+# environment variabled for development
+.env
+
+coverage

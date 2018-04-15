@@ -1,0 +1,67 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb",
+    "plugin:jest/recommended"
+  ],
+  "plugins": [
+    "import",
+    "jest"
+  ],
+  "env": {
+    "node": true,
+    "jest/globals": true
+  },
+  "rules": {
+    "no-restricted-syntax": [
+      0,
+      "ForOfStatement"
+    ],
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": [
+          "Link"
+        ],
+        "specialLink": [
+          "to"
+        ]
+      }
+    ],
+    "arrow-body-style": [
+      "error",
+      "as-needed"
+    ],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ],
+    "jsx-a11y/label-has-for": [
+      2,
+      {
+        "components": [
+          "Label"
+        ],
+        "required": {
+          "some": [
+            "nesting",
+            "id"
+          ]
+        },
+        "allowChildren": false
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": "webpack"
+  },
+  "globals": {
+    "document": true,
+    "window": true
+  }
+}
