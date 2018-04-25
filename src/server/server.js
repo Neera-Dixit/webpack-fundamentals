@@ -5,7 +5,6 @@ import devMiddleware from 'webpack-dev-middleware';
 import hotMiddleware from 'webpack-hot-middleware';
 import es6Renderer from 'express-es6-template-engine';
 import webpackConfig from '../../webpack.config';
-import favicon from 'serve-favicon';
 
 const expressApp = express();
 const expressPORT = process.env.PORT || 3000;
@@ -13,12 +12,6 @@ const expressPORT = process.env.PORT || 3000;
 expressApp.engine('html', es6Renderer);
 expressApp.set('views', path.join(process.cwd(), 'dist'));
 expressApp.set('view engine', 'html');
-
-const faviconPath = path.join(process.cwd(),'assets', 'images', 'batman-10-24.ico');
-
-console.log(faviconPath);
-
-expressApp.use(favicon(faviconPath)); 
 
 if (process.env.NODE_ENV === 'development') {
   const webpackdevConfig = webpackConfig('development');

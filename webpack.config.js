@@ -1,4 +1,5 @@
 const path = require('path');
+const WebpackNotifierPlugin = require('webpack-notifier');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -50,6 +51,7 @@ const devPlugins = environment => commonPlugins(environment).concat([
   }),
   new BundleAnalyzer.BundleAnalyzerPlugin(),
   new HtmlWebpackHarddiskPlugin(),
+  new WebpackNotifierPlugin({alwaysNotify: true}),
 ]);
 
 const prodPlugins = environment => commonPlugins(environment).concat([
